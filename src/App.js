@@ -3,7 +3,11 @@ import './components/searcher'
 //import Searcher from './components/searcher'
 import DocumentList from './components/documentList'
 
-const documents = [
+/*Hooks*/
+import {useState} from 'react'
+import {useEffect} from 'react'
+ 
+const documentsTest = [
   {
     id:1,
     numOf:'03-BS-001',
@@ -25,6 +29,14 @@ const documents = [
 ]
 
 function App() {
+  const [doctos, setDoctos] = useState([])
+  const [search, newSearch] = useState([])
+
+  useEffect(() => {
+    setDoctos(documentsTest)
+    console.log('se activa UseEfect');
+  }, [search])
+
   return (
     <div className="App">
      <h1>Buscar Oficio</h1>
@@ -33,7 +45,7 @@ function App() {
         <button>Buscar</button>
     </div>
      <hr/>
-     <DocumentList docs={documents}></DocumentList>
+     <DocumentList docs={doctos}></DocumentList>
     </div>
   );
 }
