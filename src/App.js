@@ -38,10 +38,10 @@ function App() {
   useEffect(() => {
     axios.get(BASEURL)
       .then(response => {
-        //console.log(response.data);
+        console.log('pido datos al server');
         setDoctos(response.data)
       })
-  }, [search])
+  }, [])
 
   const handleInputChange = (event)=>{
     SetSearch(event.target.value)
