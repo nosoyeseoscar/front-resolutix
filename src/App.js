@@ -2,12 +2,15 @@ import './App.css';
 import './components/searcher'
 //import Searcher from './components/searcher'
 import DocumentList from './components/documentList'
+import axios from 'axios'
 
 /*Hooks*/
 import {useState} from 'react'
 import {useEffect} from 'react'
+
+const BASEURL = 'http://localhost:3001/api/documents/'
  
-const documentsTest = [
+/*const documentsTest = [
   {
     id:1,
     numOf:'03-BS-001',
@@ -26,24 +29,36 @@ const documentsTest = [
     promovente:'Fulanito de Tal',
     tipo: 'Requerimiento'
   }
-]
+]*/
 
 function App() {
   const [doctos, setDoctos] = useState([])
-  const [search, newSearch] = useState([])
+  const [search, SetSearch] = useState([])
 
   useEffect(() => {
-    setDoctos(documentsTest)
-    console.log('se activa UseEfect');
+    axios.get(BASEURL)
+      .then(response => {
+        //console.log(response.data);
+        setDoctos(response.data)
+      })
   }, [search])
+
+  const handleInputChange = (event)=>{
+    SetSearch(event.target.value)
+  }
+
+  const handleSubmit = (event)=>{
+    event.preventDefault()
+    console.log(search);
+  }
 
   return (
     <div className="App">
      <h1>Buscar Oficio</h1>
-     <div>
-        <input type='text'></input>
+     <form onSubmit={handleSubmit}>
+        <input type='text' onChange={handleInputChange}></input>
         <button>Buscar</button>
-    </div>
+    </form>
      <hr/>
      <DocumentList docs={doctos}></DocumentList>
     </div>
